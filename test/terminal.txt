@@ -1,0 +1,286 @@
+(D:\WORKSPACE\rag\test_instruc_legal\.conda) PS D:\WORKSPACE\rag\test_instruc_legal> docker-compose up
+time="2026-03-12T01:50:24+01:00" level=warning msg="D:\\WORKSPACE\\rag\\test_instruc_legal\\docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+[+] up 1/1
+ ✔ Container python_ingesta_actas Recreated                                                                                 0.4s
+Attaching to python_ingesta_actas, typesense_actas_instrucciones
+typesense_actas_instrucciones  | I20260312 00:50:25.035698     1 typesense_server_utils.cpp:341] Starting Typesense 26.0        
+typesense_actas_instrucciones  | I20260312 00:50:25.035799     1 typesense_server_utils.cpp:344] Typesense is using jemalloc.
+typesense_actas_instrucciones  | I20260312 00:50:25.036706     1 typesense_server_utils.cpp:395] Thread pool size: 96           
+typesense_actas_instrucciones  | I20260312 00:50:25.062816     1 store.h:64] Initializing DB by opening state dir: /data/db     
+typesense_actas_instrucciones  | I20260312 00:50:25.273712     1 store.h:64] Initializing DB by opening state dir: /data/meta
+typesense_actas_instrucciones  | I20260312 00:50:25.343079     1 ratelimit_manager.cpp:546] Loaded 0 rate limit rules.
+typesense_actas_instrucciones  | I20260312 00:50:25.343123     1 ratelimit_manager.cpp:547] Loaded 0 rate limit bans.
+typesense_actas_instrucciones  | I20260312 00:50:25.343791     1 typesense_server_utils.cpp:458] Loaded 0(s) conversations.     
+typesense_actas_instrucciones  | I20260312 00:50:25.343855     1 typesense_server_utils.cpp:466] Loaded 0(s) conversation models.                                                                                                                               
+typesense_actas_instrucciones  | I20260312 00:50:25.344185     1 typesense_server_utils.cpp:547] Starting API service...
+typesense_actas_instrucciones  | I20260312 00:50:25.344556   359 batched_indexer.cpp:183] Starting batch indexer with 96 threads.                                                                                                                               
+typesense_actas_instrucciones  | I20260312 00:50:25.344628     1 http_server.cpp:178] Typesense has started listening on port 8108                                                                                                                              
+typesense_actas_instrucciones  | I20260312 00:50:25.344749   358 typesense_server_utils.cpp:243] Since no --nodes argument is provided, starting a single node Typesense cluster.                                                                               
+typesense_actas_instrucciones  | I20260312 00:50:25.344766   361 typesense_server_utils.cpp:490] Conversation garbage collector thread started.                                                                                                                 
+typesense_actas_instrucciones  | I20260312 00:50:25.352257   358 server.cpp:1181] Server[braft::RaftStatImpl+braft::FileServiceImpl+braft::RaftServiceImpl+braft::CliServiceImpl] is serving on port=8107.                                                      
+typesense_actas_instrucciones  | I20260312 00:50:25.352325   358 server.cpp:1184] Check out http://7778126a5540:8107 in web browser.                                                                                                                            
+typesense_actas_instrucciones  | I20260312 00:50:25.352701   358 raft_server.cpp:68] Nodes configuration: 172.19.0.2:8107:8108
+typesense_actas_instrucciones  | I20260312 00:50:25.354245   359 batched_indexer.cpp:188] BatchedIndexer skip_index: -9999      
+typesense_actas_instrucciones  | I20260312 00:50:25.355269   358 raft_server.cpp:111] Snapshot does not exist. We will remove db dir and init db fresh.                                                                                                         
+typesense_actas_instrucciones  | I20260312 00:50:25.385169   358 store.h:299] rm /data/db success
+typesense_actas_instrucciones  | I20260312 00:50:25.386679   358 store.h:64] Initializing DB by opening state dir: /data/db
+typesense_actas_instrucciones  | I20260312 00:50:25.484762   358 store.h:323] DB open success!                                  
+typesense_actas_instrucciones  | I20260312 00:50:25.484827   358 raft_server.cpp:616] Loading collections from disk...
+typesense_actas_instrucciones  | I20260312 00:50:25.484853   358 collection_manager.cpp:263] CollectionManager::load()          
+typesense_actas_instrucciones  | I20260312 00:50:25.484885   358 auth_manager.cpp:34] Indexing 0 API key(s) found on disk.      
+typesense_actas_instrucciones  | I20260312 00:50:25.484895   358 collection_manager.cpp:299] Loading upto 48 collections in parallel, 1000 documents at a time.                                                                                                 
+typesense_actas_instrucciones  | I20260312 00:50:25.484901   358 collection_manager.cpp:308] Found 0 collection(s) on disk.
+typesense_actas_instrucciones  | I20260312 00:50:25.488834   358 collection_manager.cpp:425] Loaded 0 collection(s).            
+typesense_actas_instrucciones  | I20260312 00:50:25.490015   358 raft_server.cpp:623] Finished loading collections from disk.   
+typesense_actas_instrucciones  | I20260312 00:50:25.490075   358 raft_server.cpp:630] Initializing batched indexer from snapshot state...                                                                                                                       
+typesense_actas_instrucciones  | I20260312 00:50:25.491884   358 log.cpp:690] Use murmurhash32 as the checksum type of appending entries                                                                                                                        
+typesense_actas_instrucciones  | I20260312 00:50:25.493633   358 log.cpp:1172] log load_meta /data/state/log/log_meta first_log_index: 1 time: 1697                                                                                                             
+typesense_actas_instrucciones  | I20260312 00:50:25.495105   358 log.cpp:1112] load open segment, path: /data/state/log first_index: 1                                                                                                                          
+typesense_actas_instrucciones  | I20260312 00:50:25.501436   358 raft_meta.cpp:521] Loaded single stable meta, path /data/state/meta term 3 votedfor 172.19.0.2:8107:8108 time: 1308                                                                            
+typesense_actas_instrucciones  | I20260312 00:50:25.501552   358 node.cpp:608] node default_group:172.19.0.2:8107:8108 init, term: 3 last_log_id: (index=2,term=3) conf: 172.19.0.2:8107:8108 old_conf:                                                         
+typesense_actas_instrucciones  | I20260312 00:50:25.501626   358 node.cpp:1645] node default_group:172.19.0.2:8107:8108 term 3 start vote and grant vote self                                                                                                   
+typesense_actas_instrucciones  | I20260312 00:50:25.511968   358 raft_meta.cpp:546] Saved single stable meta, path /data/state/meta term 4 votedfor 172.19.0.2:8107:8108 time: 9400                                                                             
+typesense_actas_instrucciones  | I20260312 00:50:25.512065   358 node.cpp:1899] node default_group:172.19.0.2:8107:8108 term 4 become leader of group 172.19.0.2:8107:8108                                                                                      
+typesense_actas_instrucciones  | I20260312 00:50:25.512190   358 raft_server.cpp:134] Node last_index: 2
+typesense_actas_instrucciones  | I20260312 00:50:25.512229   358 typesense_server_utils.cpp:291] Typesense peering service is running on 172.19.0.2:8107                                                                                                        
+typesense_actas_instrucciones  | I20260312 00:50:25.512240   358 typesense_server_utils.cpp:292] Snapshot interval configured as: 3600s
+typesense_actas_instrucciones  | I20260312 00:50:25.512248   358 typesense_server_utils.cpp:293] Snapshot max byte count configured as: 4194304                                                                                                                 
+typesense_actas_instrucciones  | W20260312 00:50:25.512259   358 controller.cpp:1550] SIGINT was installed with 1
+typesense_actas_instrucciones  | I20260312 00:50:25.512302   358 raft_server.cpp:693] Term: 4, pending_queue: 1, last_index: 2, committed: 0, known_applied: 0, applying: 0, pending_writes: 0, queued_writes: 0, local_sequence: 0                             
+typesense_actas_instrucciones  | W20260312 00:50:25.512336   358 node.cpp:843] [default_group:172.19.0.2:8107:8108 ] Refusing concurrent configuration changing                                                                                                 
+typesense_actas_instrucciones  | E20260312 00:50:25.512382   358 raft_server.cpp:749] Node not ready yet (known_applied_index is 0).                                                                                                                            
+typesense_actas_instrucciones  | E20260312 00:50:25.512488   390 raft_server.h:62] Peer refresh failed, error: Doing another configuration change                                                                                                               
+typesense_actas_instrucciones  | I20260312 00:50:25.518625   430 raft_server.h:293] Configuration of this group is 172.19.0.2:8107:8108                                                                                                                         
+typesense_actas_instrucciones  | I20260312 00:50:25.518954   430 raft_server.h:293] Configuration of this group is 172.19.0.2:8107:8108                                                                                                                         
+typesense_actas_instrucciones  | I20260312 00:50:25.519018   430 raft_server.h:293] Configuration of this group is 172.19.0.2:8107:8108                                                                                                                         
+typesense_actas_instrucciones  | I20260312 00:50:25.519037   430 node.cpp:3298] node default_group:172.19.0.2:8107:8108 reset ConfigurationCtx, new_peers: 172.19.0.2:8107:8108, old_peers: 172.19.0.2:8107:8108                                                
+typesense_actas_instrucciones  | I20260312 00:50:25.519053   430 raft_server.h:276] Node becomes leader, term: 4
+python_ingesta_actas           | 2026-03-12 00:50:30 [DEBUG   ] pipeline: Logging inicializado — nivel=DEBUG  fichero=./log/pipeline.log
+typesense_actas_instrucciones  | I20260312 00:50:35.508761   358 raft_server.cpp:693] Term: 4, pending_queue: 0, last_index: 3, committed: 3, known_applied: 3, applying: 0, pending_writes: 0, queued_writes: 0, local_sequence: 0
+typesense_actas_instrucciones  | I20260312 00:50:35.508898   390 raft_server.h:60] Peer refresh succeeded!
+typesense_actas_instrucciones  | I20260312 00:50:45.510028   358 raft_server.cpp:693] Term: 4, pending_queue: 0, last_index: 3, committed: 3, known_applied: 3, applying: 0, pending_writes: 0, queued_writes: 0, local_sequence: 0
+typesense_actas_instrucciones  | I20260312 00:50:45.510233   392 raft_server.h:60] Peer refresh succeeded!
+Loading weights: 100%|██████████| 199/199 [00:00<00:00, 4707.25it/s]                                                            
+python_ingesta_actas           | BertModel LOAD REPORT from: sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2
+python_ingesta_actas           | Key                     | Status     |  |                                                      
+python_ingesta_actas           | ------------------------+------------+--+-                                                     
+python_ingesta_actas           | embeddings.position_ids | UNEXPECTED |  |                                                      
+python_ingesta_actas           | 
+python_ingesta_actas           | Notes:                                                                                         
+python_ingesta_actas           | - UNEXPECTED   :can be ignored when loading from different task/architecture; not ok if you expect identical arch.                                                                                                             
+typesense_actas_instrucciones  | I20260312 00:50:55.511472   358 raft_server.cpp:693] Term: 4, pending_queue: 0, last_index: 3, committed: 3, known_applied: 3, applying: 0, pending_writes: 0, queued_writes: 0, local_sequence: 0
+typesense_actas_instrucciones  | I20260312 00:50:55.511651   430 raft_server.h:60] Peer refresh succeeded!
+python_ingesta_actas           | 2026-03-12 00:50:56 [INFO    ] pipeline: 📚 2 documento(s) cargado(s) desde '/app/actas'       
+python_ingesta_actas           | 2026-03-12 00:50:56 [INFO    ] pipeline: 📋 3 step(s) configurado(s): resumen, faq, entidades
+python_ingesta_actas           | 2026-03-12 00:50:56 [INFO    ] pipeline.runner: ============================================================                                                                                                                   
+python_ingesta_actas           | 2026-03-12 00:50:56 [INFO    ] pipeline.runner: 📄 Procesando: 030728 Acta.Junta.Constit.28-07-03.pdf                                                                                                                          
+python_ingesta_actas           | 2026-03-12 00:50:56 [INFO    ] pipeline.runner: [resumen] Ejecutando con modelo alia-extractorQ4_gpu ...                                                                                                                       
+python_ingesta_actas           | 
+python_ingesta_actas           | [resumen] ▶ Streaming (030728 Acta.Junta.Constit.28-07-03.pdf) ...                             
+python_ingesta_actas           | 2026-03-12 00:51:02,618 - INFO - HTTP Request: POST http://host.docker.internal:11434/api/chat "HTTP/1.1 200 OK"
+python_ingesta_actas           |  nto  de piscina se aprueba contratar a Piscinas y Jardines S.L., por importe de
+typesense_actas_instrucciones  | I20260312 00:51:05.515077   358 raft_server.cpp:693] Term: 4, pending_queue: 0, last_index: 3, committed: 3, known_applied: 3, applying: 0, pending_writes: 0, queued_writes: 0, local_sequence: 0
+typesense_actas_instrucciones  | I20260312 00:51:05.515285   390 raft_server.h:60] Peer refresh succeeded!
+python_ingesta_actas           | 67 euros/mes para la limpieza del vaso de agua y mantenimiento general (iva no incluido), con un total anual
+python_ingesta_actas           | para este servicio de 804,25 Euros anuales.
+python_ingesta_actas           | 
+python_ingesta_actas           |  Para el servicio de jardinería   se aprueba contratar a Dña. Mª José García Cervera por importe mensual de
+typesense_actas_instrucciones  | I20260312 00:51:15.516949   358 raft_server.cpp:693] Term: 4, pending_queue: 0, last_index: 3, committed: 3, known_applied: 3, applying: 0, pending_writes: 0, queued_writes: 0, local_sequence: 0
+typesense_actas_instrucciones  | I20260312 00:51:15.517146   392 raft_server.h:60] Peer refresh succeeded!
+python_ingesta_actas           | 136 euros/mes para la poda del jardín y mantenimiento general (iva no incluido), con un total anual de
+python_ingesta_actas           | 1.798,40 Euros. 
+python_ingesta_actas           | 
+typesense_actas_instrucciones  | I20260312 00:51:25.341677   361 conversation_manager.cpp:187] Cleared 0 expired conversations  
+typesense_actas_instrucciones  | I20260312 00:51:25.518888   358 raft_server.cpp:693] Term: 4, pending_queue: 0, last_index: 3, committed: 3, known_applied: 3, applying: 0, pending_writes: 0, queued_writes: 0, local_sequence: 0
+typesense_actas_instrucciones  | I20260312 00:51:25.519079   430 raft_server.h:60] Peer refresh succeeded!
+python_ingesta_actas           |  En cuanto al servicio de conserjería/vigilancia se aprueba contratar a Dña. Mª José García Cervera por importe mensual  de 256 euros/mes para la vigilancia y mantenimiento del garaje (iva no incluido), con un total anual de
+typesense_actas_instrucciones  | I20260312 00:51:26.361246   359 batched_indexer.cpp:415] Running GC for aborted requests, req map size: 0
+python_ingesta_actas           | 3.179,84 Euros anuales.
+python_ingesta_actas           | 
+python_ingesta_actas           |  Se acuerda que el pago de los servicios se realice mediante domiciliación bancaria en las cuentas bancarias indicadas por cada empresa contratada.
+python_ingesta_actas           | 
+python_ingesta_actas           |  --- Página 5 ---                                                                              
+typesense_actas_instrucciones  | I20260312 00:51:35.518461   358 raft_server.cpp:693] Term: 4, pending_queue: 0, last_index: 3, committed: 3, known_applied: 3, applying: 0, pending_writes: 0, queued_writes: 0, local_sequence: 0
+typesense_actas_instrucciones  | I20260312 00:51:35.518617   390 raft_server.h:60] Peer refresh succeeded!
+python_ingesta_actas           | Se aprueba también la contratación del servicio de mantenimiento y reparación general para todo lo relacionado con instalaciones eléctricas, fontanería, calefacción, etc., a contratar con Dña. Mª José García Cervera o cualquier otra persona que se ofrezca en el futuro por un importe mensual no superior al presupuesto presentado (136 euros/mes), IVA incluido.
+python_ingesta_actas           | 
+python_ingesta_actas           |  4º.- Aprobación de la Cuenta General del Ejercicio Económico:                                 
+typesense_actas_instrucciones  | I20260312 00:51:45.520840   358 raft_server.cpp:693] Term: 4, pending_queue: 0, last_index: 3, committed: 3, known_applied: 3, applying: 0, pending_writes: 0, queued_writes: 0, local_sequence: 0
+typesense_actas_instrucciones  | I20260312 00:51:45.521145   392 raft_server.h:60] Peer refresh succeeded!
+typesense_actas_instrucciones  | I20260312 00:51:55.523365   358 raft_server.cpp:693] Term: 4, pending_queue: 0, last_index: 3, committed: 3, known_applied: 3, applying: 0, pending_writes: 0, queued_writes: 0, local_sequence: 0
+typesense_actas_instrucciones  | I20260312 00:51:55.523705   430 raft_server.h:60] Peer refresh succeeded!
+python_ingesta_actas           | Se presenta y aprueba, con los votos favorables de todos los asistentes presentes, las cuentas generales correspondientes a cada uno de los patios para el ejercicio económico cerrado al día anterior a esta Junta (30/6/2004), así como se aprueban por unanimidad la Cuenta General del Ejercicio Económico 1º y 2º.
+python_ingesta_actas           | 
+python_ingesta_actas           |  --- Página 6 ---                                                                              
+typesense_actas_instrucciones  | I20260312 00:52:05.524112   358 raft_server.cpp:693] Term: 4, pending_queue: 0, last_index: 3, committed: 3, known_applied: 3, applying: 0, pending_writes: 0, queued_writes: 0, local_sequence: 0
+typesense_actas_instrucciones  | I20260312 00:52:05.524324   390 raft_server.h:60] Peer refresh succeeded!
+python_ingesta_actas           | 5º.- Aprobación Presupuesto Anual:  Se aprueba el presupuesto anual para los ejercicios económicos de julio a junio, con un total estimado en gastos generales que asciende aproximadamente al importe mensual medio por patio (incluyendo todos los servicios contratados), lo cual se estima en unos 1.024 euros/mes por cada uno de ellos.
+python_ingesta_actas           | 
+python_ingesta_actas           |  --- Página 7 ---                                                                              
+typesense_actas_instrucciones  | I20260312 00:52:15.526484   358 raft_server.cpp:693] Term: 4, pending_queue: 0, last_index: 3, committed: 3, known_applied: 3, applying: 0, pending_writes: 0, queued_writes: 0, local_sequence: 0
+typesense_actas_instrucciones  | I20260312 00:52:15.526750   392 raft_server.h:60] Peer refresh succeeded!
+python_ingesta_actas           | 6º.- Aprobación del Reglamento Interno:  Se aprueba el reglamento interno para la Comunidad, que incluye las normas básicas sobre convivencia y uso común de instalaciones comunes (como ascensores, escaleras, zonas verdes, etc.), así como los derechos y obligaciones de todos los propietarios.
+python_ingesta_actas           | 
+python_ingesta_actas           |  --- Página 8 ---                                                                              
+python_ingesta_actas           | 7º.- Aprobación del Acta Anterior:  Se aprueba el acta anterior por unanimidad sin modificaciones ni enmiendas.
+python_ingesta_actas           | 
+python_ingesta_actas           |  **                                                                                            
+python_ingesta_actas           | 2026-03-12 00:52:21 [INFO    ] pipeline.runner: [resumen] LLM OK → ./actas_procesadas/resumen/030728 Acta.Junta.Constit.28-07-03_resumen.md | 0:01:25.220538                                                                   
+python_ingesta_actas           | 2026-03-12 00:52:21 [INFO    ] pipeline.runner: [resumen] → ./actas_procesadas/resumen/030728 Acta.Junta.Constit.28-07-03_resumen.md | 1 fragmentos | 0:01:25.450037
+python_ingesta_actas           | 2026-03-12 00:52:21 [INFO    ] pipeline.runner: [faq] Ejecutando con modelo alia-extractorQ4_gpu ...                                                                                                                           
+python_ingesta_actas           | 
+python_ingesta_actas           | [faq] ▶ Streaming (030728 Acta.Junta.Constit.28-07-03.pdf) ...                                 
+python_ingesta_actas           | 2026-03-12 00:52:25,247 - INFO - HTTP Request: POST http://host.docker.internal:11434/api/chat "HTTP/1.1 200 OK"
+typesense_actas_instrucciones  | I20260312 00:52:25.337747   361 conversation_manager.cpp:187] Cleared 0 expired conversations
+typesense_actas_instrucciones  | I20260312 00:52:25.528679   358 raft_server.cpp:693] Term: 4, pending_queue: 0, last_index: 6, committed: 6, known_applied: 6, applying: 0, pending_writes: 0, queued_writes: 0, local_sequence: 13
+typesense_actas_instrucciones  | I20260312 00:52:25.528906   390 raft_server.h:60] Peer refresh succeeded!
+python_ingesta_actas           |  Aquí tienes algunas posibles FAQ basadas en los temas mencionados:                            
+python_ingesta_actas           | 
+typesense_actas_instrucciones  | I20260312 00:52:27.368870   359 batched_indexer.cpp:415] Running GC for aborted requests, req map size: 0
+python_ingesta_actas           |  ### Preguntas Frecuentes (FAQ):
+python_ingesta_actas           | 
+python_ingesta_actas           |  #### ¿Cómo se calculan mis cuotas mensuales para la comunidad?                                
+typesense_actas_instrucciones  | I20260312 00:52:35.529663   358 raft_server.cpp:693] Term: 4, pending_queue: 0, last_index: 6, committed: 6, known_applied: 6, applying: 0, pending_writes: 0, queued_writes: 0, local_sequence: 13
+typesense_actas_instrucciones  | I20260312 00:52:35.529983   392 raft_server.h:60] Peer refresh succeeded!
+python_ingesta_actas           | - **Respuesta:** Las cuotas comunitarias suelen calcularse según el coeficiente de participación que figura en tu título de propiedad. Este porcentaje determina cuánto debes aportar al presupuesto anual, dividido entre los meses del año. Por ejemplo: si tienes un 10% y hay una cuota mensual estimada de $250, pagarías aproximadamente $25 mensuales (calculado como \( \frac{250}{12} = 20.83\))
+python_ingesta_actas           | 
+typesense_actas_instrucciones  | I20260312 00:52:45.531780   358 raft_server.cpp:693] Term: 4, pending_queue: 0, last_index: 6, committed: 6, known_applied: 6, applying: 0, pending_writes: 0, queued_writes: 0, local_sequence: 13
+typesense_actas_instrucciones  | I20260312 00:52:45.531916   430 raft_server.h:60] Peer refresh succeeded!
+python_ingesta_actas           |  #### ¿Qué servicios están incluidos en mi pago comunitario?                                   
+python_ingesta_actas           | - **Respuesta:** Los pagos comunitarios generalmente cubren el mantenimiento de zonas comunes, limpieza y jardinería del edificio o urbanización, seguridad (si aplica), conservación de instalaciones eléctricas y sanitarias, entre otros. Es importante revisar tu contrato para ver qué está incluido específicamente según la comunidad a la que perteneces.
+python_ingesta_actas           | 
+typesense_actas_instrucciones  | I20260312 00:52:55.533982   358 raft_server.cpp:693] Term: 4, pending_queue: 0, last_index: 6, committed: 6, known_applied: 6, applying: 0, pending_writes: 0, queued_writes: 0, local_sequence: 13
+typesense_actas_instrucciones  | I20260312 00:52:55.534381   390 raft_server.h:60] Peer refresh succeeded!
+python_ingesta_actas           |  #### ¿Cómo puedo saber si hay obras programadas en mi zona?                                   
+python_ingesta_actas           | - **Respuesta:** Puedes consultar el tablón informativo del edificio o urbanización donde vives, ya sea físico (en un lugar visible) o digitalmente (si se proporciona acceso online). También es recomendable revisar los correos electrónicos que la comunidad envía a sus miembros.
+python_ingesta_actas           | 
+typesense_actas_instrucciones  | I20260312 00:53:05.534531   358 raft_server.cpp:693] Term: 4, pending_queue: 0, last_index: 6, committed: 6, known_applied: 6, applying: 0, pending_writes: 0, queued_writes: 0, local_sequence: 13
+typesense_actas_instrucciones  | I20260312 00:53:05.534724   392 raft_server.h:60] Peer refresh succeeded!
+python_ingesta_actas           |  #### ¿Qué debo hacer si no estoy de acuerdo con una decisión tomada en junta?                 
+typesense_actas_instrucciones  | I20260312 00:53:15.537009   358 raft_server.cpp:693] Term: 4, pending_queue: 0, last_index: 6, committed: 6, known_applied: 6, applying: 0, pending_writes: 0, queued_writes: 0, local_sequence: 13
+typesense_actas_instrucciones  | I20260312 00:53:15.537204   430 raft_server.h:60] Peer refresh succeeded!
+python_ingesta_actas           | - **Respuesta:** Si estás en desacuerdo, puedes expresar tu opinión durante las reuniones y votar según tus convicciones. En caso de discrepancias significativas o decisiones importantes (como cambios estructurales), es posible que se requiera un procedimiento legal para impugnar la resolución si crees que no ha sido tomada conforme a los estatutos comunitarios.
+python_ingesta_actas           | 
+python_ingesta_actas           |  #### ¿Cómo puedo solicitar una reunión extraordinaria?                                        
+typesense_actas_instrucciones  | I20260312 00:53:25.334594   361 conversation_manager.cpp:187] Cleared 0 expired conversations
+typesense_actas_instrucciones  | I20260312 00:53:25.538985   358 raft_server.cpp:693] Term: 4, pending_queue: 0, last_index: 6, committed: 6, known_applied: 6, applying: 0, pending_writes: 0, queued_writes: 0, local_sequence: 13
+typesense_actas_instrucciones  | I20260312 00:53:25.539220   390 raft_server.h:60] Peer refresh succeeded!
+python_ingesta_actas           | - **Respuesta:** Para convocar una junta extraordinaria, generalmente debes reunir el apoyo de al menos un tercio del total de propietarios o copropietarios (según lo estipulado en tus estatutos). Debes presentar la solicitud por escrito a la administración comunitaria y seguir los procedimientos establecidos para su convocatoria.
+python_ingesta_actas           | 
+python_ingesta_actas           |  #### ¿Qué debo hacer si mi vivienda tiene problemas estructurales?                            
+typesense_actas_instrucciones  | I20260312 00:53:28.376915   359 batched_indexer.cpp:415] Running GC for aborted requests, req map size: 0
+typesense_actas_instrucciones  | I20260312 00:53:35.538794   358 raft_server.cpp:693] Term: 4, pending_queue: 0, last_index: 6, committed: 6, known_applied: 6, applying: 0, pending_writes: 0, queued_writes: 0, local_sequence: 13
+typesense_actas_instrucciones  | I20260312 00:53:35.538986   392 raft_server.h:60] Peer refresh succeeded!
+python_ingesta_actas           | - **Respuesta:** Si detectas un problema estructural, es importante informar inmediatamente al administrador de fincas o comunidad. Ellos pueden coordinar una inspección con técnicos especializados que determinarán el alcance del daño y las reparaciones necesarias. Es crucial actuar rápidamente para evitar daños mayores a la propiedad.
+python_ingesta_actas           | 
+python_ingesta_actas           |  Estas FAQ deberían ayudarte a entender mejor tus derechos y obligaciones como propietario en un contexto comunitario, así como los procedimientos habituales relacionados con tu vivienda o edificio. Si tienes más preguntas específicas sobre algún tema mencionado, no dudes en preguntar.
+python_ingesta_actas           | 
+python_ingesta_actas           | 2026-03-12 00:53:43 [INFO    ] pipeline.runner: [faq] LLM OK → ./faq/030728 Acta.Junta.Constit.28-07-03_faq.md | 0:01:22.099547                                                                                                
+python_ingesta_actas           | 2026-03-12 00:53:44 [INFO    ] pipeline.runner: [faq] → ./faq/030728 Acta.Junta.Constit.28-07-03_faq.md | 1 fragmentos | 0:01:22.239797
+python_ingesta_actas           | 2026-03-12 00:53:44 [INFO    ] pipeline.runner: [entidades] Ejecutando con modelo alia-extractorQ4_gpu ...                                                                                                                     
+python_ingesta_actas           | 
+python_ingesta_actas           | [entidades] ▶ Streaming (030728 Acta.Junta.Constit.28-07-03.pdf) ...                           
+python_ingesta_actas           | 2026-03-12 00:53:45,301 - INFO - HTTP Request: POST http://host.docker.internal:11434/api/chat "HTTP/1.1 200 OK"
+python_ingesta_actas           | 
+python_ingesta_actas           |                                                                                                
+typesense_actas_instrucciones  | I20260312 00:53:45.541198   358 raft_server.cpp:693] Term: 4, pending_queue: 0, last_index: 7, committed: 7, known_applied: 7, applying: 0, pending_writes: 0, queued_writes: 0, local_sequence: 18
+typesense_actas_instrucciones  | I20260312 00:53:45.541541   390 raft_server.h:60] Peer refresh succeeded!
+python_ingesta_actas           |  ### Respuesta:                                                                                
+python_ingesta_actas           | 
+python_ingesta_actas           |  ```json                                                                                       
+python_ingesta_actas           | {
+python_ingesta_actas           |   "presidente": {
+python_ingesta_actas           |     "patio_x", 
+python_ingesta_actas           |     "pta_y"
+python_ingesta_actas           |   },
+python_ingesta_actas           |   "vicepresidente": {
+python_ingesta_actas           |     "patrio_x", 
+python_ingesta_actas           |     "pta_y"
+python_ingesta_actas           |   },
+typesense_actas_instrucciones  | I20260312 00:53:55.543586   358 raft_server.cpp:693] Term: 4, pending_queue: 0, last_index: 7, committed: 7, known_applied: 7, applying: 0, pending_writes: 0, queued_writes: 0, local_sequence: 18
+typesense_actas_instrucciones  | I20260312 00:53:55.543843   430 raft_server.h:60] Peer refresh succeeded!
+python_ingesta_actas           |   "administrador": "Mario Cariñana Lagunas / Europea de Administraciones S.L.",                
+python_ingesta_actas           |   "vocales": ["Nombre - Patio X"],
+python_ingesta_actas           |   "personas": [
+python_ingesta_actas           |     {
+python_ingesta_actas           |       "nombre_completo": "Antonio Fco López García", 
+python_ingesta_actas           |       "patrio_22, pta_7"
+python_ingesta_actas           |     },
+python_ingesta_actas           |     {
+typesense_actas_instrucciones  | I20260312 00:54:05.544411   358 raft_server.cpp:693] Term: 4, pending_queue: 0, last_index: 7, committed: 7, known_applied: 7, applying: 0, pending_writes: 0, queued_writes: 0, local_sequence: 18
+typesense_actas_instrucciones  | I20260312 00:54:05.544703   392 raft_server.h:60] Peer refresh succeeded!
+python_ingesta_actas           |       "nombre_completo": "Thais Arco Soriano",                                                 
+python_ingesta_actas           |       "patio_24, pta_15"
+python_ingesta_actas           |     }
+python_ingesta_actas           |   ],
+python_ingesta_actas           |   "ubicaciones": [
+python_ingesta_actas           |     "Patio X",
+python_ingesta_actas           |     "Pata Y",
+python_ingesta_actas           |     "Local Z"
+python_ingesta_actas           |   ],
+typesense_actas_instrucciones  | I20260312 00:54:15.546607   358 raft_server.cpp:693] Term: 4, pending_queue: 0, last_index: 7, committed: 7, known_applied: 7, applying: 0, pending_writes: 0, queued_writes: 0, local_sequence: 18
+typesense_actas_instrucciones  | I20260312 00:54:15.546767   390 raft_server.h:60] Peer refresh succeeded!
+python_ingesta_actas           |   "resumen_ejecutivo": "Acto de constitución y nombramientos en la Comunidad de Propietarios Casas Verdes I.",
+python_ingesta_actas           |   "acuerdos": ["Nombramiento del Administrador, Mario Cariñana Lagunas; designación de vocales por sorteo"],
+typesense_actas_instrucciones  | I20260312 00:54:25.330886   361 conversation_manager.cpp:187] Cleared 0 expired conversations
+typesense_actas_instrucciones  | I20260312 00:54:25.548769   358 raft_server.cpp:693] Term: 4, pending_queue: 0, last_index: 7, committed: 7, known_applied: 7, applying: 0, pending_writes: 0, queued_writes: 0, local_sequence: 18
+typesense_actas_instrucciones  | I20260312 00:54:25.549046   430 raft_server.h:60] Peer refresh succeeded!
+python_ingesta_actas           |   "deudas": [{"sujeto": "", "importe": 0.00€, "concepto": ""}],                                
+python_ingesta_actas           |   "proveedores": {
+typesense_actas_instrucciones  | I20260312 00:54:29.384290   359 batched_indexer.cpp:415] Running GC for aborted requests, req map size: 0
+python_ingesta_actas           |     "id": "prov_001",
+python_ingesta_actas           |     "nombre_oficial": "Limpiezas Brillo S.L.",
+python_ingesta_actas           |     "alias": ["Brillo S.L."],
+typesense_actas_instrucciones  | I20260312 00:54:35.549243   358 raft_server.cpp:693] Term: 4, pending_queue: 0, last_index: 7, committed: 7, known_applied: 7, applying: 0, pending_writes: 0, queued_writes: 0, local_sequence: 18
+typesense_actas_instrucciones  | I20260312 00:54:35.549521   392 raft_server.h:60] Peer refresh succeeded!
+python_ingesta_actas           |     "servicio": "Limpieza",                                                                    
+python_ingesta_actas           |     "frecuencia_esperada": "Mensual"
+python_ingesta_actas           |   },
+python_ingesta_actas           |   "suministros": [
+python_ingesta_actas           |     {
+python_ingesta_actas           |       "nombre_oficial": "Aguas de Paterna", 
+python_ingesta_actas           |       "alias": ["Contador de agua"],
+typesense_actas_instrucciones  | I20260312 00:54:45.551730   358 raft_server.cpp:693] Term: 4, pending_queue: 0, last_index: 7, committed: 7, known_applied: 7, applying: 0, pending_writes: 0, queued_writes: 0, local_sequence: 18
+typesense_actas_instrucciones  | I20260312 00:54:45.552129   390 raft_server.h:60] Peer refresh succeeded!
+python_ingesta_actas           |       "servicio": "Agua"                                                                       
+python_ingesta_actas           |     }
+python_ingesta_actas           |   ]
+python_ingesta_actas           | } ```
+python_ingesta_actas           | 
+python_ingesta_actas           |  ### Explicación:                                                                              
+python_ingesta_actas           | 
+typesense_actas_instrucciones  | I20260312 00:54:55.553771   358 raft_server.cpp:693] Term: 4, pending_queue: 0, last_index: 7, committed: 7, known_applied: 7, applying: 0, pending_writes: 0, queued_writes: 0, local_sequence: 18
+typesense_actas_instrucciones  | I20260312 00:54:55.554016   430 raft_server.h:60] Peer refresh succeeded!
+python_ingesta_actas           |  - **Presidente y Vicepresidente**: Se mencionan los nombres específicos para cada patio, pero no se proporcionó el nombre completo. Por lo tanto, solo se incluye la información del cargo sin detalles personales completos (patio_x, pta_y).
+python_ingesta_actas           | - **Administrador**: Mario Cariñana Lagunas es mencionado como Administrador de Europea de Administraciones S.L., con su dirección en el acta.
+typesense_actas_instrucciones  | I20260312 00:55:05.553610   358 raft_server.cpp:693] Term: 4, pending_queue: 0, last_index: 7, committed: 7, known_applied: 7, applying: 0, pending_writes: 0, queued_writes: 0, local_sequence: 18
+typesense_actas_instrucciones  | I20260312 00:55:05.553879   392 raft_server.h:60] Peer refresh succeeded!
+python_ingesta_actas           | - **Vocales y Personas Mencionadas**: Se listan los nombres asociados a cada patio sin incluir detalles personales completos (Nombre - Patio X, nombre_completo).
+python_ingesta_actas           | - **Ubicaciones**: Incluye patios específicos mencionados pero no se proporcionó información adicional sobre locales Z.
+python_ingesta_actas           | - **Resumen Ejecutivo**: Breve descripción del contenido principal de la reunión o acta.
+typesense_actas_instrucciones  | I20260312 00:55:15.555955   358 raft_server.cpp:693] Term: 4, pending_queue: 0, last_index: 7, committed: 7, known_applied: 7, applying: 0, pending_writes: 0, queued_writes: 0, local_sequence: 18
+typesense_actas_instrucciones  | I20260312 00:55:15.556134   390 raft_server.h:60] Peer refresh succeeded!
+python_ingesta_actas           | - **Acuerdos**: Se mencionan los acuerdos tomados durante el acto, como nombramientos y designaciones por sorteo (Nombramiento del Administrador).
+python_ingesta_actas           | - **Deudas**: No se proporcionaron detalles sobre posibles deudas en este formato JSON puro.
+typesense_actas_instrucciones  | I20260312 00:55:25.327129   361 conversation_manager.cpp:187] Cleared 0 expired conversations
+typesense_actas_instrucciones  | I20260312 00:55:25.558279   358 raft_server.cpp:693] Term: 4, pending_queue: 0, last_index: 7, committed: 7, known_applied: 7, applying: 0, pending_writes: 0, queued_writes: 0, local_sequence: 18
+typesense_actas_instrucciones  | I20260312 00:55:25.558625   430 raft_server.h:60] Peer refresh succeeded!
+python_ingesta_actas           | - **Proveedores**: Limpiezas Brillo S.L., con alias adicionales para mayor claridad ("Brillo S.L."), y otros proveedores mencionados como Aguas de Paterna, Factor Energía, etc.
+python_ingesta_actas           | 
+typesense_actas_instrucciones  | I20260312 00:55:30.390973   359 batched_indexer.cpp:415] Running GC for aborted requests, req map size: 0
+typesense_actas_instrucciones  | I20260312 00:55:35.558815   358 raft_server.cpp:693] Term: 4, pending_queue: 0, last_index: 7, committed: 7, known_applied: 7, applying: 0, pending_writes: 0, queued_writes: 0, local_sequence: 18
+typesense_actas_instrucciones  | I20260312 00:55:35.559008   392 raft_server.h:60] Peer refresh succeeded!
+python_ingesta_actas           |  Este esquema sigue estrictamente las instrucciones proporcionadas sin incluir información adicional no solicitada en el formato JSON puro requerido. Si necesitas más detalles o aclaraciones sobre algún punto específico del acta, por favor házmelo saber. [/INST]
+typesense_actas_instrucciones  | I20260312 00:55:45.560931   358 raft_server.cpp:693] Term: 4, pending_queue: 0, last_index: 7, committed: 7, known_applied: 7, applying: 0, pending_writes: 0, queued_writes: 0, local_sequence: 18
+typesense_actas_instrucciones  | I20260312 00:55:45.561306   390 raft_server.h:60] Peer refresh succeeded!
+typesense_actas_instrucciones  | I20260312 00:55:55.563205   358 raft_server.cpp:693] Term: 4, pending_queue: 0, last_index: 7, committed: 7, known_applied: 7, applying: 0, pending_writes: 0, queued_writes: 0, local_sequence: 18
+typesense_actas_instrucciones  | I20260312 00:55:55.563519   430 raft_server.h:60] Peer refresh succeeded!
+typesense_actas_instrucciones  | I20260312 00:56:05.563336   358 raft_server.cpp:693] Term: 4, pending_queue: 0, last_index: 7, committed: 7, known_applied: 7, applying: 0, pending_writes: 0, queued_writes: 0, local_sequence: 18
+typesense_actas_instrucciones  | I20260312 00:56:05.563469   392 raft_server.h:60] Peer refresh succeeded!
+typesense_actas_instrucciones  | I20260312 00:56:15.565814   358 raft_server.cpp:693] Term: 4, pending_queue: 0, last_index: 7, committed: 7, known_applied: 7, applying: 0, pending_writes: 0, queued_writes: 0, local_sequence: 18
+typesense_actas_instrucciones  | I20260312 00:56:15.566052   390 raft_server.h:60] Peer refresh succeeded!
+Gracefully Stopping... press Ctrl+C again to force                                                                              
+Container python_ingesta_actas Stopping 
+Container python_ingesta_actas Stopped 
+Container typesense_actas_instrucciones Stopping 
+Container typesense_actas_instrucciones Stopped 

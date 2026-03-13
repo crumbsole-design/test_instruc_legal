@@ -1,0 +1,31 @@
+{
+  "name": "actas_comunidad",
+  "fields": [
+    {"name": "id", "type": "string" },
+    {"name": "fecha", "type": "int64", "facet": true },
+    {"name": "contenido_original", "type": "string" },
+    {"name": "resumen_ejecutivo", "type": "string" },
+    {"name": "faq", "type": "string" },
+    {"name": "presidente", "type": "string", "facet": true, "optional": true },
+    {"name": "vicepresidente", "type": "string", "facet": true, "optional": true },
+    {"name": "administrador", "type": "string", "facet": true, "optional": true },
+    {"name": "vocales", "type": "string[]", "facet": true },
+    {"name": "personas", "type": "string[]", "facet": true },
+    {"name": "ubicaciones", "type": "string[]", "facet": true },
+    {"name": "acuerdos", "type": "string[]" },
+    {"name": "proveedores", "type": "string[]", "facet": true },
+    {"name": "servicios", "type": "string[]", "facet": true },
+    {"name": "suministros", "type": "string[]", "index": false },
+    {"name": "incidencias_recurrentes", "type": "string[]", "facet": true },
+    {"name": "deudas", "type": "string" },
+    {"name": "costes_json", "type": "string", "index": false },
+    {"name": "step_id", "type": "string", "facet": true, "optional": true },
+    {
+      "name": "vector_legal", 
+      "type": "float[]", 
+      "num_dim": 384, 
+      "model_config": { "model_type": "user_provided" }
+    }
+  ],
+  "default_sorting_field": "fecha"
+}

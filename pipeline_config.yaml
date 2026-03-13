@@ -1,0 +1,101 @@
+settings:
+  actas_dir: "/app/actas"
+  cache_file: "./actas_procesadas/.pipeline_cache.json"
+  debug: true                   # true → activa logging DEBUG en consola y fichero
+  log_file: "./log/pipeline.log" # ruta del fichero de log (se crea automáticamente)
+
+steps:
+
+  - id: resumen
+    description: "Resumen ejecutivo en Markdown"
+    model: "alia-extractorQ4_gpu"
+    temperature: 0.1
+    num_ctx: 12000
+    output_dir: "./actas_procesadas/resumen"
+    mode: single          # single: prompt + texto en un mensaje
+    inject_whitelist: null
+    max_retries: 2
+    prompt: |
+      Genera un RESUMEN EJECUTIVO directo y profesional en Markdown del siguiente acta.
+      Estructura obligatoria:
+      ## Fecha y Asistencia
+      ## Estado de Cuentas
+      ## Acuerdos Principales
+
+      IMPORTANTE: Al terminar el punto de 'Acuerdos Principales', escribe exactamente la palabra 'FIN_RESUMEN' y no añadas ni una sola palabra más.
+
+      TEXTO DEL ACTA:
+
+  - id: faq
+    description: "Preguntas frecuentes del vecino en Markdown"
+    model: "alia-extractorQ4_gpu"
+    temperature: 0.1
+    num_ctx: 12000
+    output_dir: "./faq"
+    mode: chat            # chat: msg1=documento, msg2=prompt
+    msg_intro: |
+      A continuación te proporciono el texto de un acta.
+      Léelo detenidamente; a continuación te haré varias preguntas sobre él.
+
+      TEXTO DEL ACTA:
+    inject_whitelist: null
+    max_retries: 2
+    prompt: |
+      Usando el mismo acta, genera una lista de 5 a 10 preguntas y respuestas frecuentes (FAQ) en Markdown.
+      Las preguntas deben ser las que un vecino haría sobre sus deudas, obras o servicios.
+
+  - id: entidades
+    description: "Extracción de entidades JSON para Typesense"
+    model: "alia-extractorQ4_gpu"
+    temperature: 0.0
+    num_ctx: 12000
+    output_dir: "./json"
+    mode: chat            # chat: msg1=documento, msg2=prompt
+    msg_intro: |
+      A continuación te proporciono el texto de un acta.
+      Léelo detenidamente; a continuación te haré varias preguntas sobre él.
+
+      TEXTO DEL ACTA:
+    inject_whitelist: "whitelist/proveedores.json"
+    max_retries: 2
+    prompt: |
+      Usando el mismo acta, extrae los datos en formato JSON puro.
+      Usa estrictamente este esquema y devuelve SOLO el JSON, sin explicaciones ni markdown:
+      {
+        "presidente": "Nombre (Patio X, Pta Y)",
+        "vicepresidente": "Nombre (Patio X, Pta Y)",
+        "administrador": "Nombre / Empresa",
+        "vocales": ["Nombre - Patio X"],
+        "personas": ["Nombre completo de cualquier persona mencionada que no sea cargo"],
+        "ubicaciones": ["Patio X", "Pta Y", "Local Z"],
+        "resumen_ejecutivo": "Resumen breve del acta",
+        "acuerdos": ["Acuerdo 1", "Acuerdo 2"],
+        "deudas": [{"sujeto": "Nombre", "importe": "0.00€", "concepto": "motivo"}],
+        "proveedores": ["Nombre oficial del proveedor según lista"],
+        "servicios": ["Servicio mencionado"]
+      }
+      Si un campo no se menciona, usa "No consta" para strings o [] para arrays.
+
+synthesis_step:
+  id: sintesis
+  description: "Análisis consolidado del histórico de actas"
+  query: "balance económico anual comunidad acuerdos"
+  num_results: 5
+  model: "alia-extractorQ4_gpu"
+  temperature: 0.1
+  num_ctx: 12000
+  output_dir: "./resumen/sintesis"
+  mode: single
+  inject_whitelist: null
+  prompt: |
+    Con los siguientes fragmentos extraídos del histórico de actas de la comunidad,
+    genera un análisis consolidado ejecutivo en Markdown.
+    Identifica patrones recurrentes, acuerdos importantes y estado económico general.
+
+    ## Estructura:
+    ## Resumen del Período
+    ## Acuerdos Recurrentes
+    ## Situación Económica
+    ## Incidencias Destacadas
+
+    FRAGMENTOS:

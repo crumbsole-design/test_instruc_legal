@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  typesense:
+    image: typesense/typesense:26.0
+    container_name: typesense_actas_instrucciones
+    ports:
+      - "8108:8108"
+    volumes:
+      # Guarda los datos en una carpeta local llamada 'typesense_data'
+      - ./typesense_data:/data
+    command: '--data-dir /data --api-key=clave_secreta_actas --enable-cors'
+    restart: unless-stopped
+
+  ingesta_python:
+    build: .
+    container_name: python_ingesta_actas
+    depends_on:
+      - typesense
+    env_file:
+      - .env
+    environment:
+      - TYPESENSE_HOST=typesense
+      - TYPESENSE_API_KEY=clave_secreta_actas
+    volumes:
+      # Entrada: actas originales
+      - ./mis_actas:/app/actas
+      # Salidas persistentes (debug + caché)
+      - ./actas_procesadas:/app/actas_procesadas
+      - ./faq:/app/faq
+      - ./json:/app/json
+      - ./resumen:/app/resumen
+      - ./whitelist:/app/whitelist
+      - ./pipeline_config.yaml:/app/pipeline_config.yaml
+      - ./log:/app/log
+      # Código fuente montado para reflejar cambios sin rebuild
+      - ./pipeline:/app/pipeline
+      - ./ingesta_actas.py:/app/ingesta_actas.py
+      - ./consultor:/app/consultor

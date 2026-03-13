@@ -1,0 +1,20 @@
+# Config montada como volumen — se lee del host en runtime
+pipeline_config.yaml
+
+# Large data dirs — not needed in the image, provided via volumes at runtime
+typesense_data/
+oldactas/
+test/
+resumen/
+faq/
+json/
+actas_procesadas/
+mis_actas/
+
+# Python artifacts
+__pycache__/
+*.pyc
+*.pyo
+.env
+*.egg-info/
+.venv/

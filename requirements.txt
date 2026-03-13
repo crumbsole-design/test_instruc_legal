@@ -1,0 +1,32 @@
+# Núcleo de LlamaIndex y Conectores
+llama-index
+llama-index-vector-stores-typesense
+llama-index-llms-ollama
+llama-index-embeddings-huggingface
+llama-index-readers-file
+
+# LangChain (usado en scripts de procesamiento)
+langchain-ollama
+langchain-core
+
+# Lectura de PDFs
+PyMuPDF
+
+# Soporte para formatos específicos
+python-docx           # Para .docx
+docx2txt              # Alternativa rápida para Word
+unstructured[all-docs] # La navaja suiza para .doc, .rtf y tablas complejas
+pytesseract           # OCR para imágenes (.jpg, .png)
+Pillow                # Manejo de imágenes
+
+# Typesense cliente
+typesense
+
+# Configuración
+pyyaml
+
+# UI Chat
+streamlit
+
+# Testing
+pytest

@@ -1,0 +1,40 @@
+{
+  "proveedores": [
+    {
+      "id": "prov_001",
+      "nombre_oficial": "Limpiezas Brillo S.L.",
+      "alias": ["Brillo S.L.", "Limpiezas Brillo", "empresa de limpieza"],
+      "servicio": "Limpieza",
+      "frecuencia_esperada": "Mensual"
+    },
+    {
+      "id": "prov_002",
+      "nombre_oficial": "Valesport",
+      "alias": ["Vallesport", "mantenimiento piscina", "Valesport S.L."],
+      "servicio": "Piscina",
+      "frecuencia_esperada": "Mensual"
+    }
+  ],
+  "suministros": [
+    {
+      "nombre_oficial": "Aguas de Paterna",
+      "alias": ["Contador de agua", "Aigües de Paterna"],
+      "servicio": "Agua"
+    },
+    {
+        "nombre_oficial": "Endesa",
+        "alias": ["Electricidad general", "Electricidad garaje", "Electricidad P22", "Electricidad P24", "Electricidad P26", "Electricidad P28", "Electricidad P30", "Electricidad P32", "Electricidad P34", "Electricidad P36", "Electricidad P38", "Electricidad P40"],
+        "servicio": "Electricidad"
+    },
+    {
+        "nombre_oficial": "Factor Energía",
+        "alias": ["Electricidad P24"],
+        "servicio": "Electricidad"
+    },
+    {
+        "nombre_oficial": "Energia Nufri",
+        "alias": ["Electricidad P26"],
+        "servicio": "Electricidad"
+    }
+  ]
+}
