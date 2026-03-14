@@ -1,3 +1,4 @@
+import hashlib
 import json
 import logging
 import os
@@ -79,7 +80,22 @@ def run_pipeline(config: PipelineConfig, documents, storage_context, client):
             "contenido_original": doc.text[:1000],
         }
 
-        for step in config.steps:
+        # --- documento original ---
+        primary_hash = hashlib.sha256(doc.text.encode()).hexdigest()
+        if not is_cached(nombre, "documento_original", primary_hash, cache_path):
+            try:
+                n = index_step_result(
+                    doc.text, "documento_original", nombre, base_metadata, storage_context
+                )
+                save_cache(nombre, "documento_original", primary_hash, cache_path)
+                logger.info("[documento_original] → %d fragmentos indexados", n)
+            except Exception as e:
+                logger.error("[documento_original] Indexado falló: %s", e, exc_info=True)
+        else:
+            logger.debug("[documento_original] En caché — saltando.")
+
+        process_steps = [s for s in config.steps if getattr(s, "role", None) != "detection"]
+        for step in process_steps:
             step_hash = get_step_hash(step)
 
             if is_cached(nombre, step.id, step_hash, cache_path):
