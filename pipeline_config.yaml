@@ -10,19 +10,28 @@ steps:
     description: "Resumen ejecutivo en Markdown"
     model: "alia-extractorQ4_gpu"
     temperature: 0.1
-    num_ctx: 12000
-    output_dir: "./actas_procesadas/resumen"
+    num_ctx: 50000
+    output_dir: "./resumen"
     mode: single          # single: prompt + texto en un mensaje
     inject_whitelist: null
     max_retries: 2
     prompt: |
       Genera un RESUMEN EJECUTIVO directo y profesional en Markdown del siguiente acta.
+      EVITA: 
+        ## incluir números especificos, hay un resumen general, no un desglose detallado.
+        ## mencionar nombres de personas, solo cargos y roles.
+        ## incluir detalles de discusiones, solo acuerdos y conclusiones.
       Estructura obligatoria:
-      ## Fecha y Asistencia
-      ## Estado de Cuentas
+      ## Fecha y cantidad de asistentes 
+      ## Estado de Cuentas , la situación económica general y si se han aprobado presupuestos, no los importes específicos.
       ## Acuerdos Principales
+      ## ruegos y preguntas más relevantes
 
-      IMPORTANTE: Al terminar el punto de 'Acuerdos Principales', escribe exactamente la palabra 'FIN_RESUMEN' y no añadas ni una sola palabra más.
+      IMPORTANTE:
+         NO incluyas ningún dato específico como números, nombres o detalles de discusiones. como por ejemplo, no digas "Se aprobó un presupuesto de 5000€ para obras", sino "Se aprobó un presupuesto para obras". El resumen debe ser general y ejecutivo, no un desglose detallado.
+         No incluyas ningún nombre de persona, solo sus cargos o roles, como "El presidente", "El administrador", etc. No digas "Juan Pérez asistió a la reunión", sino "Asistieron el presidente, el administrador y varios vecinos".
+         No incluyas detalles de discusiones o debates, solo los acuerdos y conclusiones finales. No digas "Después de una larga discusión sobre el presupuesto, se decidió aprobarlo", sino "Se aprobó el presupuesto después de la discusión". El resumen debe centrarse en los resultados y acuerdos, no en el proceso o los detalles específicos.
+         Al terminar el punto de 'Acuerdos Principales', escribe exactamente la palabra 'FIN_RESUMEN' y no añadas ni una sola palabra más.
 
       TEXTO DEL ACTA:
 
@@ -30,12 +39,13 @@ steps:
     description: "Preguntas frecuentes del vecino en Markdown"
     model: "alia-extractorQ4_gpu"
     temperature: 0.1
-    num_ctx: 12000
+    num_ctx: 50000
     output_dir: "./faq"
     mode: chat            # chat: msg1=documento, msg2=prompt
     msg_intro: |
       A continuación te proporciono el texto de un acta.
-      Léelo detenidamente; a continuación te haré varias preguntas sobre él.
+      Léelo detenidamente;  extrae de él datos concretos sobre deudas, obras o servicios que puedan generar dudas a un vecino.
+      Luego, genera una lista de preguntas frecuentes (FAQ) que un vecino podría tener sobre esos temas, junto con respuestas claras y concisas basadas en el contenido del acta.
 
       TEXTO DEL ACTA:
     inject_whitelist: null
@@ -48,7 +58,7 @@ steps:
     description: "Extracción de entidades JSON para Typesense"
     model: "alia-extractorQ4_gpu"
     temperature: 0.0
-    num_ctx: 12000
+    num_ctx: 50000
     output_dir: "./json"
     mode: chat            # chat: msg1=documento, msg2=prompt
     msg_intro: |

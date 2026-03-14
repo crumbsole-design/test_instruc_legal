@@ -12,6 +12,9 @@ import argparse
 import json
 import logging
 import os
+import re
+import time
+import urllib.request
 
 import typesense
 from llama_index.core import Settings, SimpleDirectoryReader, StorageContext
@@ -25,11 +28,14 @@ from pipeline.runner import run_pipeline, run_synthesis_step
 logger = logging.getLogger("pipeline")
 
 
-def _merge_pages(documents: list) -> list:
+def _merge_pages(documents: list, debug: bool = False, output_dir: str = os.path.join("log", "mergedInitialDocuments")) -> list:
     """Merge per-page Documents from the same source file into one Document per file.
 
     SimpleDirectoryReader splits PDFs page-by-page; the pipeline expects one
     Document per acta so the LLM sees the full text in one call.
+
+    If debug is enabled, the merged output is also written to a Markdown file
+    under `log/mergedInitialDocuments/` for inspection.
     """
     from collections import OrderedDict
     groups: dict = OrderedDict()
@@ -39,12 +45,30 @@ def _merge_pages(documents: list) -> list:
             groups[key] = {"meta": dict(doc.metadata), "pages": []}
         groups[key]["pages"].append(doc.text)
 
+    if debug:
+        os.makedirs(output_dir, exist_ok=True)
+
     merged = []
     for key, data in groups.items():
         combined = "\n\n".join(
             f"--- Página {i + 1} ---\n{page}"
             for i, page in enumerate(data["pages"])
         )
+
+        if debug:
+            # Create a file name based on source document key
+            filename = os.path.basename(str(key))
+            safe_name = re.sub(r"[^\w\-\. ]", "_", filename)
+            if not safe_name:
+                safe_name = "documento"
+            out_path = os.path.join(output_dir, f"{safe_name}_merged.md")
+            try:
+                with open(out_path, "w", encoding="utf-8") as f:
+                    f.write(combined)
+                logger.debug("Merged document written to %s", out_path)
+            except Exception:
+                logger.warning("No se pudo escribir el documento mergeado en %s", out_path, exc_info=True)
+
         merged.append(LIDocument(text=combined, metadata=data["meta"]))
     return merged
 
@@ -91,12 +115,36 @@ def main():
         "connection_timeout_seconds": 10,
     })
 
+    # --- Esperar a que Typesense esté listo (belt-and-suspenders con healthcheck) ---
+    _ts_health = f"http://{typesense_host}:8108/health"
+    for _attempt in range(1, 11):
+        try:
+            urllib.request.urlopen(_ts_health, timeout=3)
+            logger.debug("Typesense listo.")
+            break
+        except Exception:
+            if _attempt == 10:
+                raise RuntimeError(f"Typesense no respondió en {_ts_health} tras 10 intentos.")
+            logger.info("Esperando Typesense (%d/10)...", _attempt)
+            time.sleep(3)
+
+    # --- Invalidar caché si Typesense está vacío (p.ej. tras reinicio sin snapshot) ---
+    try:
+        _col_stats = client.collections[schema["name"]].retrieve()
+        if _col_stats.get("num_documents", 0) == 0 and os.path.exists(config.cache_file):
+            os.remove(config.cache_file)
+            logger.info("Typesense vacío — caché eliminada para forzar reprocesado completo.")
+    except Exception:
+        if os.path.exists(config.cache_file):
+            os.remove(config.cache_file)
+            logger.info("Colección Typesense inexistente — caché eliminada para forzar reprocesado completo.")
+
     vector_store = TypesenseVectorStore(client=client, collection_name=schema["name"])
     storage_context = StorageContext.from_defaults(vector_store=vector_store)
 
     # --- Load documents (PDF, DOCX, TXT, images/OCR via LlamaIndex readers) ---
     reader = SimpleDirectoryReader(config.actas_dir, recursive=True)
-    documents = _merge_pages(reader.load_data())
+    documents = _merge_pages(reader.load_data(), debug=config.debug)
     logger.info("📚 %d documento(s) cargado(s) desde '%s'", len(documents), config.actas_dir)
     logger.info("📋 %d step(s) configurado(s): %s",
                 len(config.steps), ', '.join(s.id for s in config.steps))

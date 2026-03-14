@@ -70,18 +70,11 @@ def run_step(step, doc_text: str, file_name: str, debug: bool = False) -> str:
     for intento in range(max_retries + 1):
         try:
             messages = _build_messages(step, doc_text[:ventana], extra_context)
+            response = llm.chat(messages)
+            output = response.message.content.strip()
             if debug:
-                print(f"\n[{step.id}] ▶ Streaming ({file_name}) ...", flush=True)
-                chunks = []
-                for chunk in llm.stream_chat(messages):
-                    delta = chunk.delta or ""
-                    print(delta, end="", flush=True)
-                    chunks.append(delta)
-                print(flush=True)  # trailing newline
-                return "".join(chunks).strip()
-            else:
-                response = llm.chat(messages)
-                return response.message.content.strip()
+                logger.debug("[%s] ▶ Respuesta (%s):\n%s", step.id, file_name, output)
+            return output
         except Exception as e:
             if intento < max_retries:
                 ventana //= 2

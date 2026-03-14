@@ -92,7 +92,6 @@ def run_pipeline(config: PipelineConfig, documents, storage_context, client):
             try:
                 output = run_step(step, doc.text, nombre, debug=config.debug)
                 out_path = save_step_output(output, step.output_dir, nombre, step.id)
-                save_cache(nombre, step.id, step_hash, cache_path)
                 elapsed_llm = datetime.now() - t0
                 logger.info("[%s] LLM OK → %s | %s", step.id, out_path, elapsed_llm)
             except Exception as e:
@@ -104,10 +103,11 @@ def run_pipeline(config: PipelineConfig, documents, storage_context, client):
                 n_nodes = index_step_result(
                     output, step.id, nombre, enriched, storage_context
                 )
+                save_cache(nombre, step.id, step_hash, cache_path)
                 elapsed = datetime.now() - t0
                 logger.info("[%s] → %s | %d fragmentos | %s", step.id, out_path, n_nodes, elapsed)
             except Exception as e:
-                logger.error("[%s] Indexado falló (LLM cacheado): %s", step.id, e, exc_info=True)
+                logger.error("[%s] Indexado falló: %s", step.id, e, exc_info=True)
 
 
 def run_synthesis_step(config: PipelineConfig, storage_context, client):
