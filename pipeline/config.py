@@ -22,6 +22,10 @@ class StepConfig:
     )
     inject_whitelist: Optional[str] = None
     max_retries: int = 2
+    role: Optional[str] = None            # "detection" u otros roles especiales
+    chunk_tokens: Optional[int] = None    # tamaño de chunk en tokens; None = comportamiento actual
+    chunk_strategy: str = "map_reduce"    # "map_reduce" | "merge_json"
+    reduce_prompt: Optional[str] = None   # prompt de reducción para map_reduce
 
 
 @dataclass
