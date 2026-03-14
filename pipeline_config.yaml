@@ -68,6 +68,8 @@ steps:
       TEXTO DEL ACTA:
     inject_whitelist: "whitelist/proveedores.json"
     max_retries: 2
+    chunk_tokens: 512
+    chunk_strategy: "merge_json"
     prompt: |
       Usando el mismo acta, extrae los datos en formato JSON puro.
       Usa estrictamente este esquema y devuelve SOLO el JSON, sin explicaciones ni markdown:
