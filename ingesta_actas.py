@@ -22,8 +22,10 @@ from llama_index.core.schema import Document as LIDocument
 from llama_index.embeddings.huggingface import HuggingFaceEmbedding
 from llama_index.vector_stores.typesense import TypesenseVectorStore
 
+from pipeline.acta_splitter import split_acta
 from pipeline.config import load_config, setup_logging
 from pipeline.runner import run_pipeline, run_synthesis_step
+from pipeline.steps import run_step, save_step_output
 
 logger = logging.getLogger("pipeline")
 
@@ -71,6 +73,61 @@ def _merge_pages(documents: list, debug: bool = False, output_dir: str = os.path
 
         merged.append(LIDocument(text=combined, metadata=data["meta"]))
     return merged
+
+
+def _detect_and_split(
+    doc,
+    detection_step,
+    config,
+) -> list[LIDocument] | None:
+    """Run the detection step and optionally split the doc into sections.
+
+    - If the document is NOT an acta (es_acta == False) → return None.
+    - If it is an acta and split_acta() returns sections → return a list of
+      Documents (one per section) with updated metadata.
+    - If it is an acta but split_acta() returns an empty list → return None
+      (fallback to processing the whole document).
+    """
+    nombre = doc.metadata.get("file_name", "archivo_desconocido")
+    sample = doc.text[:3000]
+
+    raw = run_step(detection_step, sample, nombre, debug=config.debug)
+    save_step_output(raw, detection_step.output_dir, nombre, detection_step.id)
+
+    # Parse JSON response (the model may add extra text)
+    clean = raw.strip()
+    if not clean.startswith("{"):
+        m = re.search(r"\{.*\}", clean, re.DOTALL)
+        if m:
+            clean = m.group()
+
+    try:
+        import json as _json, re as _re
+        clean = _re.sub(r",\s*([\]}])", r"\1", clean)
+        data = _json.loads(clean)
+    except Exception:
+        logger.warning("[%s] No se pudo parsear respuesta de detección; tratando como acta.", nombre)
+        data = {"es_acta": True}
+
+    if not data.get("es_acta", True):
+        logger.info("[%s] No es acta — procesando sin split.", nombre)
+        return None
+
+    secciones = split_acta(doc.text, nombre)
+    if not secciones:
+        logger.info("[%s] Es acta pero sin secciones detectadas — procesando sin split.", nombre)
+        return None
+
+    base = os.path.splitext(nombre)[0]
+    section_docs = []
+    for sec in secciones:
+        sec_name = f"{base}__{sec['section_id']}"
+        meta = {**doc.metadata, "file_name": sec_name, "seccion": sec["section_id"]}
+        section_docs.append(LIDocument(text=sec["content"], metadata=meta))
+
+    logger.info("[%s] Split en %d secciones: %s", nombre, len(section_docs),
+                [s["section_id"] for s in secciones])
+    return section_docs
 
 
 def main():
@@ -150,7 +207,20 @@ def main():
                 len(config.steps), ', '.join(s.id for s in config.steps))
 
     # --- Run pipeline ---
-    run_pipeline(config, documents, storage_context, client)
+    detection_step = next(
+        (s for s in config.steps if getattr(s, "role", None) == "detection"),
+        None,
+    )
+
+    expanded_docs = []
+    for doc in documents:
+        if detection_step:
+            section_docs = _detect_and_split(doc, detection_step, config)
+        else:
+            section_docs = None
+        expanded_docs.extend(section_docs if section_docs else [doc])
+
+    run_pipeline(config, expanded_docs, storage_context, client)
 
     # --- Optional synthesis step ---
     if args.synthesis:
