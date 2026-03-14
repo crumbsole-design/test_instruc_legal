@@ -6,6 +6,30 @@ settings:
 
 steps:
 
+  - id: identificacion
+    role: detection
+    description: "Detecta si el documento es un acta de comunidad"
+    model: "alia-extractorQ4_gpu"
+    temperature: 0.0
+    num_ctx: 4000
+    output_dir: "./identificacion"
+    mode: single
+    inject_whitelist: null
+    max_retries: 1
+    prompt: |
+      Analiza el siguiente documento. Nombre del archivo: {file_name}
+
+      Evalúa EXACTAMENTE estos 4 criterios:
+      1. El nombre del archivo contiene la palabra "acta" (ignora mayúsculas)
+      2. El título o encabezado del documento contiene la palabra "acta"
+      3. El documento tiene una sección de ASISTENTES (lista de personas presentes)
+      4. El documento tiene una sección de ORDEN DEL DÍA (puntos a tratar)
+
+      Devuelve SOLO este JSON, sin explicaciones ni markdown:
+      {"es_acta": true, "criterios": {"nombre_contiene_acta": bool, "titulo_contiene_acta": bool, "tiene_asistentes": bool, "tiene_orden_del_dia": bool}, "razon": "motivo breve"}
+
+      TEXTO DEL DOCUMENTO:
+
   - id: resumen
     description: "Resumen ejecutivo en Markdown"
     model: "alia-extractorQ4_gpu"
@@ -15,6 +39,9 @@ steps:
     mode: single          # single: prompt + texto en un mensaje
     inject_whitelist: null
     max_retries: 2
+    chunk_tokens: 2048
+    chunk_strategy: map_reduce
+    reduce_prompt: "Unifica los siguientes resúmenes parciales en uno coherente:"
     prompt: |
       Genera un RESUMEN EJECUTIVO directo y profesional en Markdown del siguiente acta.
       EVITA: 
@@ -50,6 +77,9 @@ steps:
       TEXTO DEL ACTA:
     inject_whitelist: null
     max_retries: 2
+    chunk_tokens: 2048
+    chunk_strategy: map_reduce
+    reduce_prompt: "Fusiona estas listas de preguntas, elimina duplicados:"
     prompt: |
       Usando el mismo acta, genera una lista de 5 a 10 preguntas y respuestas frecuentes (FAQ) en Markdown.
       Las preguntas deben ser las que un vecino haría sobre sus deudas, obras o servicios.
@@ -68,6 +98,8 @@ steps:
       TEXTO DEL ACTA:
     inject_whitelist: "whitelist/proveedores.json"
     max_retries: 2
+    chunk_tokens: 2048
+    chunk_strategy: merge_json
     prompt: |
       Usando el mismo acta, extrae los datos en formato JSON puro.
       Usa estrictamente este esquema y devuelve SOLO el JSON, sin explicaciones ni markdown:
