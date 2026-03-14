@@ -22,6 +22,9 @@ class StepConfig:
     )
     inject_whitelist: Optional[str] = None
     max_retries: int = 2
+    chunk_tokens: Optional[int] = None
+    chunk_strategy: Optional[str] = None
+    reduce_prompt: Optional[str] = None
 
 
 @dataclass
